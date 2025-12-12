@@ -1,13 +1,16 @@
+using System.Collections.Immutable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using inventory.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace inventory.Data
 {
-    public class ApplicationDBContext :DbContext
+    public class ApplicationDBContext:IdentityDbContext<AppUser>
     {
         public ApplicationDBContext(DbContextOptions dbContextOptions): base(dbContextOptions)
         {
@@ -26,6 +29,21 @@ namespace inventory.Data
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        List<IdentityRole> roles = new List<IdentityRole>
+        {
+            new IdentityRole
+            {
+                Name="Admin",
+                NormalizedName="ADMIN"
+            },
+            new IdentityRole
+            {
+                Name="User",
+                NormalizedName="USER"
+            }
+        };
+        modelBuilder.Entity<IdentityRole>().HasData(roles);
+
         modelBuilder.Entity<Sale>()
             .HasOne(x => x.Product)
             .WithMany(p => p.Sales)

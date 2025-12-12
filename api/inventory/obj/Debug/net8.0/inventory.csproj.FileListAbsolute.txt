@@ -145,3 +145,10 @@ D:\inventory\api\inventory\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawi
 D:\inventory\api\inventory\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 D:\inventory\api\inventory\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\inventory\api\inventory\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\inventory\api\inventory\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\inventory\api\inventory\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\inventory\api\inventory\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\inventory\api\inventory\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\inventory\api\inventory\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+D:\inventory\api\inventory\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+D:\inventory\api\inventory\obj\Debug\net8.0\inventory.sourcelink.json

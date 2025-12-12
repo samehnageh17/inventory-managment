@@ -1,7 +1,11 @@
 using inventory.Data;
 using inventory.Interfaces;
+using inventory.Models;
 using inventory.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,36 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<AppUser, IdentityRole>(option=>{
+    option.Password.RequireDigit=true;
+    option.Password.RequireLowercase=true;
+    option.Password.RequireUppercase=true;
+    option.Password.RequireNonAlphanumeric=true;
+    option.Password.RequiredLength=8;
+}).AddEntityFrameworkStores<ApplicationDBContext>();
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme=
+    option.DefaultChallengeScheme=
+    option.DefaultForbidScheme=
+    option.DefaultSignInScheme=
+    option.DefaultScheme=
+    option.DefaultSignOutScheme=JwtBearerDefaults.AuthenticationScheme;
+
+}).AddJwtBearer(option =>
+{
+    option.TokenValidationParameters=new TokenValidationParameters
+    {
+      ValidateIssuer=true,
+      ValidIssuer=builder.Configuration["Jwt:Issuer"],
+        ValidateAudience=true,
+        ValidAudience=builder.Configuration["Jwt:Audience"],
+        ValidateIssuerSigningKey=true,
+        IssuerSigningKey=new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"])),  
+    };
+});
+
 
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 var app = builder.Build();
@@ -24,7 +58,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
